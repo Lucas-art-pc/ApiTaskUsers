@@ -53,4 +53,10 @@ public class QuestionService(AppDbContext context, IMapper mapper)
         return true;
     }
 
+    public async Task<IEnumerable<ReadQuestionDto>> GetAllQuestions()
+    {
+        var questions = await _context.Questions.Include(q => q.User).ToListAsync();
+        return questions.Select(question => _mapper.Map<ReadQuestionDto>(question));
+    }
+
 }

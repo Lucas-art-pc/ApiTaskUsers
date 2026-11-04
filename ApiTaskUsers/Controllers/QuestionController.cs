@@ -18,6 +18,13 @@ public class QuestionController(QuestionService questionServices) : ControllerBa
         return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ReadQuestionDto>>> GetAllQuestions()
+    {
+        var questions = await _questionServices.GetAllQuestions();
+        return Ok(questions);
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ReadQuestionDto>> GetQuestion(int id)
     {
